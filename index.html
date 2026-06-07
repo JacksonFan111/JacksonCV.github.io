@@ -147,7 +147,11 @@
   }
   .contact-cta a.big:hover{color:var(--accent);border-color:var(--accent)}
 
-  footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--faint);letter-spacing:.03em}
+  .surf-note{margin-top:80px;display:flex;align-items:center;gap:20px}
+  .surf-note svg{flex:none;width:128px;height:22px;color:var(--accent);opacity:.6}
+  .surf-note p{font-family:var(--serif);font-style:italic;font-size:16.5px;color:var(--muted);max-width:none;margin:0}
+  footer{margin-top:30px;padding-top:24px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--faint);letter-spacing:.03em}
+  @media (max-width:560px){.surf-note{flex-direction:column;align-items:flex-start;gap:12px}.surf-note svg{width:108px}}
 
   /* load reveal */
   @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
@@ -328,6 +332,10 @@
         </div>
       </section>
 
+      <div class="surf-note">
+        <svg viewBox="0 0 128 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 11 C 12 1, 22 1, 32 11 S 52 21, 62 11 S 82 1, 92 11 S 112 21, 126 11"/></svg>
+        <p>When I'm not building evaluation harnesses, I'm in the water — surfing New Zealand's coast.</p>
+      </div>
       <footer>© <span id="yr"></span> Jiasheng (Jackson) Fan · New Zealand</footer>
     </main>
   </div>
