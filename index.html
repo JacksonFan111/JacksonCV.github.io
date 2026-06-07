@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jiasheng (Jackson) Fan</title>
+<meta name="description" content="Jiasheng (Jackson) Fan — Data/BI developer and independent AI research reader. Recursive self-improvement, agent evaluation, memory systems, and research automation.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#F6F3EC;
+    --paper-2:#FBF9F4;
+    --ink:#1B1A17;
+    --muted:#6E6A60;
+    --faint:#928D80;
+    --accent:#A23E2A;
+    --accent-soft:#F0E2DC;
+    --line:#E4DDCF;
+    --line-2:#EDE7DA;
+    --maxw:1080px;
+    --serif:"Newsreader",Georgia,serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:32px}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  /* subtle paper grain */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  a{color:var(--ink);text-decoration:none}
+
+  .wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:72px 40px 96px}
+
+  .layout{display:grid;grid-template-columns:268px 1fr;gap:72px;align-items:start}
+
+  /* ---------- LEFT RAIL ---------- */
+  .rail{position:sticky;top:48px}
+
+  .avatar{
+    position:relative;width:148px;height:148px;border-radius:14px;overflow:hidden;
+    background:linear-gradient(150deg,#2b2924,#46423a);
+    box-shadow:0 14px 34px -16px rgba(40,30,20,.5);margin-bottom:26px;
+  }
+  .avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+  .avatar .monogram{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-size:54px;color:#F6F3EC;letter-spacing:1px;z-index:1;
+  }
+
+  .name{font-family:var(--serif);font-size:30px;font-weight:500;line-height:1.12;letter-spacing:-.01em}
+  .name .last{color:var(--accent)}
+  .role{margin-top:12px;font-size:14.5px;color:var(--muted);line-height:1.5}
+  .loc{margin-top:10px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+
+  .rail-divider{height:1px;background:var(--line);margin:24px 0}
+
+  .contacts{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .contacts li{font-size:14px}
+  .contacts a{display:inline-flex;align-items:center;gap:9px;color:var(--ink);transition:color .18s}
+  .contacts a:hover{color:var(--accent)}
+  .contacts svg{width:15px;height:15px;flex:none;color:var(--faint);transition:color .18s}
+  .contacts a:hover svg{color:var(--accent)}
+  .contacts .todo{color:var(--faint);font-style:italic}
+
+  /* ---------- MAIN ---------- */
+  nav.topnav{
+    display:flex;flex-wrap:wrap;gap:6px 22px;padding-bottom:20px;margin-bottom:8px;
+    border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;letter-spacing:.02em;
+  }
+  nav.topnav a{color:var(--muted);position:relative;padding:2px 0;transition:color .18s}
+  nav.topnav a:hover{color:var(--accent)}
+  nav.topnav a::after{content:"";position:absolute;left:0;bottom:-1px;width:0;height:1px;background:var(--accent);transition:width .22s ease}
+  nav.topnav a:hover::after{width:100%}
+
+  section{padding-top:54px}
+  .eyebrow{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:18px;height:1px;background:var(--accent)}
+
+  h2{font-family:var(--serif);font-size:26px;font-weight:500;letter-spacing:-.01em;margin-bottom:18px;line-height:1.2}
+
+  .lede{font-family:var(--serif);font-size:21px;line-height:1.5;color:var(--ink);max-width:62ch}
+  p{max-width:64ch;color:#2c2a25}
+  p + p{margin-top:14px}
+
+  .pull{
+    margin-top:24px;padding:18px 22px;background:var(--paper-2);border-left:2px solid var(--accent);
+    border-radius:0 8px 8px 0;font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink);max-width:62ch;
+  }
+
+  /* research interest grid */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);border:1px solid var(--line-2);border-radius:10px;overflow:hidden;margin-top:6px}
+  .cell{background:var(--paper-2);padding:22px 22px 24px;transition:background .2s}
+  .cell:hover{background:#fff}
+  .cell .num{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.04em}
+  .cell h3{font-family:var(--serif);font-size:18px;font-weight:500;margin:8px 0 7px}
+  .cell p{font-size:13.5px;line-height:1.55;color:var(--muted);max-width:none}
+
+  /* selected work */
+  .work{border-top:1px solid var(--line);padding:26px 0 4px}
+  .work:first-of-type{border-top:0}
+  .work .meta{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+  .work h3{font-family:var(--serif);font-size:20px;font-weight:500;margin-bottom:12px}
+  ul.dash{list-style:none;display:flex;flex-direction:column;gap:9px}
+  ul.dash li{position:relative;padding-left:20px;font-size:14.5px;color:#312f29;max-width:64ch;line-height:1.55}
+  ul.dash li::before{content:"";position:absolute;left:0;top:11px;width:9px;height:1px;background:var(--accent)}
+  ul.dash li b{font-weight:600}
+
+  /* experience */
+  .job-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:4px}
+  .job-head h3{font-family:var(--serif);font-size:20px;font-weight:500}
+  .job-head .when{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.04em}
+  .job-org{font-size:14px;color:var(--accent);margin-bottom:14px}
+
+  /* education + skills two-up */
+  .twoup{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+  .twoup h3{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .twoup ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .edu-item .t{font-family:var(--serif);font-size:16.5px}
+  .edu-item .d{font-size:13px;color:var(--muted);margin-top:2px}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
+  .tags span{font-family:var(--mono);font-size:11.5px;color:#403d36;background:var(--paper-2);border:1px solid var(--line);border-radius:5px;padding:4px 9px}
+
+  /* contact */
+  .contact-cta a.big{
+    font-family:var(--serif);font-size:23px;color:var(--ink);border-bottom:1px solid var(--line);
+    transition:border-color .2s,color .2s;
+  }
+  .contact-cta a.big:hover{color:var(--accent);border-color:var(--accent)}
+
+  footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--faint);letter-spacing:.03em}
+
+  /* load reveal */
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .rail,nav.topnav,section{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+  nav.topnav{animation-delay:.05s}
+  section:nth-of-type(1){animation-delay:.1s}
+  section:nth-of-type(2){animation-delay:.16s}
+  section:nth-of-type(3){animation-delay:.22s}
+  section:nth-of-type(4){animation-delay:.28s}
+  section:nth-of-type(5){animation-delay:.34s}
+
+  @media (max-width:900px){
+    .wrap{padding:44px 24px 72px}
+    .layout{grid-template-columns:1fr;gap:8px}
+    .rail{position:static;display:grid;grid-template-columns:auto 1fr;gap:0 24px;align-items:center;margin-bottom:26px}
+    .avatar{width:104px;height:104px;margin-bottom:0;grid-row:span 4}
+    .rail-divider,.contacts{grid-column:1 / -1}
+    .rail-divider{margin:22px 0 18px}
+    .contacts{flex-direction:row;flex-wrap:wrap;gap:10px 22px}
+    .grid,.twoup{grid-template-columns:1fr}
+    .twoup{gap:36px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="layout">
+
+    <!-- LEFT RAIL -->
+    <aside class="rail">
+      <div class="avatar">
+        <!-- Drop a file named profile.jpg next to index.html to show your photo. -->
+        <img src="profile.jpg" alt="Jackson Fan" onerror="this.remove()">
+        <span class="monogram">JF</span>
+      </div>
+
+      <div class="name">Jiasheng <span class="last">Fan</span></div>
+      <div class="role">Data/BI developer &amp; independent AI research reader · self-improving AI systems</div>
+      <div class="loc">New Zealand</div>
+
+      <div class="rail-divider"></div>
+
+      <ul class="contacts">
+        <li><a href="mailto:fjia779@aucklanduni.ac.nz">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          fjia779@aucklanduni.ac.nz</a></li>
+        <li><a href="https://www.linkedin.com/in/jackson-fan-5a7b4a123/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0M.4 8.4h4.2V24H.4zM8.3 8.4h4v2.1h.06c.56-1 1.93-2.1 3.97-2.1C20.6 8.4 24 10.6 24 15.3V24h-4.2v-7.7c0-1.84-.03-4.2-2.56-4.2-2.56 0-2.95 2-2.95 4.06V24H8.3z"/></svg>
+          LinkedIn</a></li>
+        <li><a href="#" rel="noopener" title="Add your GitHub or portfolio URL here">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 .1.8 0 1 0 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.9 18.3 5.2 18.3 5.2c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5"/></svg>
+          GitHub / Portfolio</a></li>
+        <li class="todo">↳ replace # with your link</li>
+      </ul>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <nav class="topnav">
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#work">Selected Work</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education &amp; Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <section id="about">
+        <div class="eyebrow">About</div>
+        <p class="lede">I build the evaluation harnesses, memory systems, tool-use scaffolds, and audit trails that let AI systems improve safely and measurably.</p>
+        <p style="margin-top:20px">Data/BI developer and independent AI research reader with a practical systems background, targeting research-assistant and research-engineering work on recursive self-improvement. My edge is translating ambiguous real-world problems into reliable data pipelines, reproducible evaluations, and executive-readable evidence.</p>
+        <p>I read frontier papers, extract their mechanisms, and turn them into diagrams, workflows, dashboards, and implementation plans — bridging research and engineering. DGM-style self-improvement only works when proposed changes are tested, ranked, and archived, and my professional work is built around exactly that: reliable metrics, audit evidence, lineage, and stakeholder trust.</p>
+        <div class="pull">I want to help build the systems that let AI improve safely, cheaply, recursively, and measurably.</div>
+      </section>
+
+      <section id="research">
+        <div class="eyebrow">Research Interest Map</div>
+        <h2>Where I'm reading and building</h2>
+        <div class="grid">
+          <div class="cell"><div class="num">01</div><h3>DGM &amp; recursive self-improvement</h3><p>Mutate → test → archive → branch → select; coding agents that improve their own scaffolds.</p></div>
+          <div class="cell"><div class="num">02</div><h3>Open-ended archive search</h3><p>Stepping stones, parent selection, diversity, and non-greedy improvement trajectories.</p></div>
+          <div class="cell"><div class="num">03</div><h3>Agent scaffolds &amp; tool use</h3><p>Prompt pipelines, code-editing tools, test runners, peer review, and patch selection.</p></div>
+          <div class="cell"><div class="num">04</div><h3>Test-time learning &amp; memory</h3><p>Experience stores, retrieval, continual adaptation, and capability preservation.</p></div>
+          <div class="cell"><div class="num">05</div><h3>Efficient training / inference</h3><p>Cheaper loops, faster experiments, and memory/compute-aware systems design.</p></div>
+          <div class="cell"><div class="num">06</div><h3>Evaluation &amp; safety</h3><p>Benchmark validity, traceability, regression tests, sandboxing, and failure-mode analysis.</p></div>
+        </div>
+      </section>
+
+      <section id="work">
+        <div class="eyebrow">Selected Work</div>
+        <h2>Evidence projects</h2>
+
+        <div class="work">
+          <div class="meta">Independent Research Track · Self-Improving AI / Recursive Agents · 2026</div>
+          <h3>Self-improving AI synthesis &amp; teaching pack</h3>
+          <ul class="dash">
+            <li>Read and summarized the <b>Darwin Gödel Machine</b> before watching a lecture on self-improving AI; identified the broader pattern: the automated research loop may become the moat.</li>
+            <li>Built a <b>paper map</b> of the self-improving-AI literature by first-publication date — tracing the shift from curiosity and intrinsic motivation to prompt optimization, test-time learning, self-play, memory, and recursive agent harnesses.</li>
+            <li>Designed a <b>six-slide teaching pack</b> for graduate students covering historical roots, invented mechanisms, the DGM workflow, a Rubicon assessment, and open research questions.</li>
+            <li><b>Proposed next step:</b> a small toy DGM-style harness — agent version archive, parent-selection scoring, patch-generation workflow, regression tests, and an evaluation dashboard.</li>
+          </ul>
+        </div>
+
+        <div class="work">
+          <div class="meta">Power BI · SSAS · RLS · Production analytics</div>
+          <h3>Lightweight IAS reporting model</h3>
+          <ul class="dash">
+            <li><b>Problem:</b> the full enterprise tabular model was too large, and security-grain evaluation created memory pressure.</li>
+            <li><b>Solution:</b> a compact import model using monthly aggregation, period anchors, RLS adviser/PWA logic, and controlled dimensional scaffolding.</li>
+            <li><b>Why it matters for AI research:</b> demonstrates building compute-aware evaluation infrastructure rather than brute-force systems.</li>
+          </ul>
+        </div>
+
+        <div class="work">
+          <div class="meta">CRM audit reconstruction · Operations / analytics</div>
+          <h3>Onboarding timeline evidence system</h3>
+          <ul class="dash">
+            <li><b>Problem:</b> the business needed a credible timeline from account readiness to open-to-trade status across imperfect CRM evidence.</li>
+            <li><b>Solution:</b> mapped multiple evidence sources, reconstructed chronological paths, flagged event-order issues, and produced summary/detail outputs for review.</li>
+            <li><b>Why it matters for AI research:</b> analogous to agent lineage — trace actions, preserve evidence, diagnose sequence errors, and make hidden process dynamics visible.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="experience">
+        <div class="eyebrow">Professional Experience</div>
+        <h2>Where I've done the work</h2>
+        <div class="work" style="border-top:0;padding-top:0">
+          <div class="job-head">
+            <h3>Data / BI Developer &amp; Analyst</h3>
+            <span class="when">Current</span>
+          </div>
+          <div class="job-org">Craigs Investment Partners · New Zealand</div>
+          <ul class="dash">
+            <li><b>Semantic model engineering —</b> built and refined lightweight Power BI / tabular models under memory and security constraints, including monthly aggregation, RLS-aware design, and period-return logic.</li>
+            <li><b>Evaluation &amp; audit reconstruction —</b> created CRM timeline and evidence reports that reconstruct event sequences from audit logs, tasks, file notes, and business rules.</li>
+            <li><b>Production reliability —</b> diagnosed SSAS / Power Pivot memory-pressure failures, identified heavy partitions and configuration issues, and translated technical evidence into actionable infrastructure recommendations.</li>
+            <li><b>Regulatory &amp; operational reporting —</b> delivered SSRS / SQL outputs for pension-transfer tax reporting, corporate-actions evidence, brokerage setup matrices, QI exception logic, and external CSV exports.</li>
+            <li><b>Stakeholder translation —</b> turned ambiguous requests from compliance, operations, onboarding, advisers, and audit into concrete definitions, tables, filters, and validation checks.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="education">
+        <div class="eyebrow">Education &amp; Skills</div>
+        <div class="twoup">
+          <div>
+            <h3>Education &amp; Certifications</h3>
+            <ul>
+              <li class="edu-item"><div class="t">MSc &amp; BSc, Food Science</div><div class="d">Scientific training, experimental reasoning, and quantitative analysis.</div></li>
+              <li class="edu-item"><div class="t">Microsoft Azure Data Engineering</div><div class="d">Cloud data-engineering foundations and production data-platform thinking.</div></li>
+              <li class="edu-item"><div class="t">Power BI Developer</div><div class="d">Semantic modelling, DAX, reporting, and stakeholder-facing analytics.</div></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Technical Stack</h3>
+            <div class="tags">
+              <span>SQL Server</span><span>T-SQL</span><span>DAX</span><span>Power BI</span><span>SSAS / Tabular</span><span>SSRS</span><span>Data modelling</span><span>RLS</span><span>Audit evidence</span><span>Metric design</span><span>Azure Data Eng.</span>
+            </div>
+            <h3 style="margin-top:26px">Research Stack — in progress</h3>
+            <div class="tags">
+              <span>Python</span><span>LLM-agent eval</span><span>Paper reproduction</span><span>Prompt / workflow design</span><span>Benchmark tracking</span><span>Experiment tracking</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="eyebrow">Contact</div>
+        <h2>Get in touch</h2>
+        <p style="margin-bottom:18px">Open to research-assistant and research-engineering work on self-improving AI systems.</p>
+        <div class="contact-cta">
+          <a class="big" href="mailto:fjia779@aucklanduni.ac.nz">fjia779@aucklanduni.ac.nz →</a>
+        </div>
+      </section>
+
+      <footer>© <span id="yr"></span> Jiasheng (Jackson) Fan · New Zealand</footer>
+    </main>
+  </div>
+</div>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
